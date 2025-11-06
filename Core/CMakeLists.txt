@@ -37,6 +37,10 @@ set_target_properties(core PROPERTIES
 target_compile_options(core PUBLIC
         "$<$<COMPILE_LANGUAGE:Swift>:-cxx-interoperability-mode=default>"
         "$<$<COMPILE_LANGUAGE:Swift>:-wmo>"
+        # Disable C++98 compatibility warnings from Swift-generated headers
+        "$<$<COMPILE_LANGUAGE:CXX>:-Wno-c++98-compat>"
+        "$<$<COMPILE_LANGUAGE:CXX>:-Wno-c++98-compat-pedantic>"
+        "$<$<COMPILE_LANGUAGE:CXX>:-Wno-nullability-extension>"
 )
 
 target_include_directories(core PUBLIC
@@ -49,12 +53,6 @@ target_link_libraries(core PUBLIC glaze::glaze)
 # Generate C++ headers from Swift sources
 _swift_generate_cxx_header(core
         core/commands.h
-        SOURCES ${COMMANDS_SOURCES}
-        SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
-)
-
-_swift_generate_cxx_header(core
-        core/runner.h
-        SOURCES ${RUNNER_SOURCES}
+        SOURCES ${COMMANDS_SOURCES} ${RUNNER_SOURCES}
         SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )

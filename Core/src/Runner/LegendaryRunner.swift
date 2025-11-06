@@ -3,8 +3,8 @@ import Foundation
 // MARK: - Command Result
 
 public struct CommandResult {
-    public let stdout: String
-    public let stderr: String
+    public let standardOutput: String
+    public let standardError: String
     public let exitCode: Int32
     public let command: String
     public let processID: Int32
@@ -14,14 +14,14 @@ public struct CommandResult {
     }
 
     public init(
-        stdout: String,
-        stderr: String,
+        standardOutput: String,
+        standardError: String,
         exitCode: Int32,
         command: String,
         processID: Int32
     ) {
-        self.stdout = stdout
-        self.stderr = stderr
+        self.standardOutput = standardOutput
+        self.standardError = standardError
         self.exitCode = exitCode
         self.command = command
         self.processID = processID
@@ -63,12 +63,16 @@ public class LegendaryRunner {
     private let legendaryPath: String
     private let configPath: String?
 
-    /// Initialize with custom path or use default
-    public init(legendaryPath: String? = nil, configPath: String? = nil) {
-        self.legendaryPath = legendaryPath ?? Self.findLegendaryBinary()
-        self.configPath = configPath
-    }
+    // /// Initialize with custom path or use default
+    // public init(legendaryPath: String? = nil, configPath: String? = nil) {
+    //     self.legendaryPath = legendaryPath ?? Self.findLegendaryBinary()
+    //     self.configPath = configPath
+    // }
 
+    public init(legendaryPath: String) {
+        self.legendaryPath = legendaryPath
+        self.configPath = nil
+    }
     // MARK: - Public API
 
     /// Run a Legendary command synchronously and return Result
@@ -76,7 +80,7 @@ public class LegendaryRunner {
         _ command: LegendaryCommand,
         baseOptions: BaseCommandOptions = BaseCommandOptions(),
         options: RunnerOptions = RunnerOptions()
-    ) -> Result<CommandResult, LegendaryError> {
+    ) throws -> CommandResult {
         let args = command.toArguments(withBase: baseOptions)
         let fullCommand = ([legendaryPath] + args).joined(separator: " ")
 
@@ -117,10 +121,10 @@ public class LegendaryRunner {
         do {
             try process.run()
         } catch {
-            return .failure(.commandFailed(
+            throw LegendaryError.commandFailed(
                 exitCode: -1,
                 stderr: "Failed to launch process: \(error.localizedDescription)"
-            ))
+            )
         }
 
         // Read output (blocking)
@@ -161,13 +165,27 @@ public class LegendaryRunner {
             print("✅ Exit code:", process.terminationStatus)
         }
 
-        return .success(CommandResult(
-            stdout: stdoutString,
-            stderr: stderrString,
+        return CommandResult(
+            standardOutput: stdoutString,
+            standardError: stderrString,
             exitCode: process.terminationStatus,
             command: fullCommand,
             processID: process.processIdentifier
-        ))
+        )
+    }
+
+    public func tryRun(
+        _ command: LegendaryCommand,
+        baseOptions: BaseCommandOptions = BaseCommandOptions(),
+        options: RunnerOptions = RunnerOptions()
+    ) -> CommandResult? {
+        return try? run(command, baseOptions: baseOptions, options: options)
+    }
+
+    public func tryRun(
+        _ command: LegendaryCommand,
+    ) -> CommandResult? {
+        return try? run(command, baseOptions: BaseCommandOptions(), options: RunnerOptions())
     }
 
     // MARK: - Helper Methods

@@ -16,7 +16,6 @@
       },
       "cacheVariables": {
         "CMAKE_SKIP_INSTALL_ALL_DEPENDENCY": true,
-        "SWIFT_VERSION": "6.2",
         "CMAKE_CXX_STANDARD": "20"
       }
     },

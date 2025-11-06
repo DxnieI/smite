@@ -37,10 +37,6 @@ set_target_properties(core PROPERTIES
 target_compile_options(core PUBLIC
         "$<$<COMPILE_LANGUAGE:Swift>:-cxx-interoperability-mode=default>"
         "$<$<COMPILE_LANGUAGE:Swift>:-wmo>"
-        # Disable C++98 compatibility warnings from Swift-generated headers
-        "$<$<COMPILE_LANGUAGE:CXX>:-Wno-c++98-compat>"
-        "$<$<COMPILE_LANGUAGE:CXX>:-Wno-c++98-compat-pedantic>"
-        "$<$<COMPILE_LANGUAGE:CXX>:-Wno-nullability-extension>"
 )
 
 target_include_directories(core PUBLIC

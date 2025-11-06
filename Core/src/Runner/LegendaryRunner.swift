@@ -85,7 +85,7 @@ public class LegendaryRunner {
         let fullCommand = ([legendaryPath] + args).joined(separator: " ")
 
         if options.logOutput {
-            print("🚀 Running: legendary \(args.joined(separator: " "))")
+            print("Running: legendary \(args.joined(separator: " "))")
         }
 
         let process = Process()
@@ -157,12 +157,12 @@ public class LegendaryRunner {
 
         if options.logOutput {
             if !stdoutString.isEmpty {
-                print("📤 stdout:", stdoutString)
+                print("stdout:", stdoutString)
             }
             if !stderrString.isEmpty {
-                print("⚠️ stderr:", stderrString)
+                print("stderr:", stderrString)
             }
-            print("✅ Exit code:", process.terminationStatus)
+            print("Exit code:", process.terminationStatus)
         }
 
         return CommandResult(

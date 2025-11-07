@@ -30,3 +30,28 @@ func legendaryMetadata() -> String {
         .appendingPathComponent("metadata")
         .path
 }
+
+/// Get the path to the legendary binary
+public func legendaryBinaryPath() -> String {
+    #if os(macOS)
+    // macOS: Inside the .app bundle at Contents/Resources/bin
+    if let bundlePath = Bundle.main.resourcePath {
+        return URL(fileURLWithPath: bundlePath)
+            .appendingPathComponent("bin")
+            .appendingPathComponent("legendary")
+            .path
+    }
+    #else
+    // Windows/Linux: In bin subdirectory next to the executable
+    if let executablePath = Bundle.main.executablePath {
+        return URL(fileURLWithPath: executablePath)
+            .deletingLastPathComponent()
+            .appendingPathComponent("bin")
+            .appendingPathComponent("legendary")
+            .path
+    }
+    #endif
+    
+    // Fallback
+    return "legendary"
+}

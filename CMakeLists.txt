@@ -56,6 +56,9 @@ if(_glaze_aliased)
     endif()
 endif()
 
+# Find Python3
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
 # Add subdirectories
 add_subdirectory(Core)
 add_subdirectory(App)

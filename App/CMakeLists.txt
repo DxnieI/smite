@@ -38,6 +38,23 @@ target_link_libraries(app
         KF6::IconThemes
 )
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    # macOS: Install inside the .app bundle
+    set(LEGENDARY_DEST_DIR "$<TARGET_BUNDLE_CONTENT_DIR:app>/Resources/bin")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    # Windows: Install next to the executable
+    set(LEGENDARY_DEST_DIR "$<TARGET_FILE_DIR:app>/bin")
+else()
+    # Linux: Install in a bin subdirectory
+    set(LEGENDARY_DEST_DIR "$<TARGET_FILE_DIR:app>/bin")
+endif()
+
+add_custom_command(TARGET app PRE_BUILD
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/fetch_legendary.py "${LEGENDARY_DEST_DIR}"
+    COMMENT "Downloading legendary binary for current platform"
+    VERBATIM
+)
+
 # Set output name
 set_target_properties(app PROPERTIES WIN32_EXECUTABLE FALSE OUTPUT_NAME "smite")
 

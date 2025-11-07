@@ -64,8 +64,9 @@ struct AssetInfo {
     std::string buildVersion;
     std::string catalogItemId;
     std::string labelName;
-    glz::raw_json metadata; // For dynamic JSON objects
+    glz::raw_json metadata; 
     std::string namespace_;
+    int sidecarRev;
 };
 
 struct GameMetadataInner {
@@ -106,6 +107,7 @@ struct GameMetadata {
     std::map<std::string, AssetInfo> assetInfos;
     std::vector<std::string> baseUrls;
     GameMetadataInner metadata;
+    glz::raw_json sidecar;
 };
 
 struct InstalledJsonMetadata {
@@ -297,7 +299,8 @@ namespace glz {
             "catalog_item_id", &T::catalogItemId,
             "label_name", &T::labelName,
             "metadata", &T::metadata,
-            "namespace", &T::namespace_
+            "namespace", &T::namespace_,
+            "sidecar_rev", &T::sidecarRev
         );
     };
 
@@ -345,7 +348,8 @@ namespace glz {
             "app_title", &T::appTitle,
             "asset_infos", &T::assetInfos,
             "base_urls", &T::baseUrls,
-            "metadata", &T::metadata
+            "metadata", &T::metadata,
+            "sidecar", &T::sidecar
         );
     };
 

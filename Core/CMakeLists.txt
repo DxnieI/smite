@@ -27,6 +27,8 @@ add_library(core STATIC
     ${LEGENDARY_COMMANDS_SOURCES}
     ${LEGENDARY_RUNNER_SOURCES}
     src/legendary/Paths.swift
+    src/legendary/Models.swift
+    src/legendary/User.swift
 )
 
 set_target_properties(core PROPERTIES
@@ -56,5 +58,11 @@ _swift_generate_cxx_header(core
 _swift_generate_cxx_header(core
         core/legendary/runner.h
         SOURCES ${LEGENDARY_RUNNER_SOURCES}
+        SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
+
+_swift_generate_cxx_header(core
+        core/legendary/user.h
+        SOURCES src/legendary/User.swift
         SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )

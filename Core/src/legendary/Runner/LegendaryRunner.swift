@@ -65,6 +65,10 @@ public class LegendaryRunner {
     public init(legendaryPath: String) {
         self.legendaryPath = legendaryPath
     }
+
+    public init() {
+        self.legendaryPath = legendaryBinaryPath()
+    }
     // MARK: - Public API
 
     /// Run a Legendary command synchronously and return Result
@@ -177,13 +181,6 @@ public class LegendaryRunner {
         _ command: LegendaryCommand,
     ) -> CommandResult? {
         return try? run(command, baseOptions: BaseCommandOptions(), options: RunnerOptions())
-    }
-
-    // MARK: - Helper Methods
-
-    /// Find the Legendary binary using PATH
-    private static func findLegendaryBinary() -> String {
-        return "legendary"
     }
 }
 

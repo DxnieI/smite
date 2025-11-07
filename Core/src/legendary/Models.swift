@@ -1,6 +1,25 @@
-import Foundation
-
 // MARK: - Enums
+
+// MARK: - Basic Models
+
+// MARK: - Game Metadata
+
+// MARK: - Installed Metadata
+
+// MARK: - DLC and Launch
+
+// MARK: - Game Manifest
+
+// MARK: - Game Install Info
+
+// MARK: - Configuration
+
+// MARK: - User Info
+
+// MARK: - Helper for dynamic JSON
+
+/// A type-erased Codable value for handling dynamic JSON structures
+import Foundation
 
 public enum LegendaryInstallPlatform: String, Codable {
     case windows = "Windows"
@@ -9,21 +28,16 @@ public enum LegendaryInstallPlatform: String, Codable {
     case android = "Android"
     case iOS = "iOS"
 }
-
-// MARK: - Basic Models
-
 public struct Prerequisite: Codable {
     public let args: String
     public let ids: [String]
     public let name: String
     public let path: String
 }
-
 public struct CustomAttributeValue: Codable {
     public let type: String
     public let value: String
 }
-
 public struct KeyImage: Codable {
     public let height: Int
     public let md5: String
@@ -34,30 +48,26 @@ public struct KeyImage: Codable {
     public let width: Int
     public let alt: String?
 }
-
 public struct Category: Codable {
     public let path: String
 }
-
 public struct ReleaseInfo: Codable {
     public let appId: String
     public let id: String
     public let platform: [String]?
     public let dateAdded: String?
 }
-
 public struct MainGameItem: Codable {
     public let id: String
     public let namespace: String
     public let unsearchable: Bool
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case namespace
         case unsearchable
     }
 }
-
 public struct AssetInfo: Codable {
     public let appName: String
     public let assetId: String
@@ -66,7 +76,7 @@ public struct AssetInfo: Codable {
     public let labelName: String
     public let metadata: [String: AnyCodable]
     public let namespace: String
-    
+
     enum CodingKeys: String, CodingKey {
         case appName = "app_name"
         case assetId = "asset_id"
@@ -77,9 +87,6 @@ public struct AssetInfo: Codable {
         case namespace
     }
 }
-
-// MARK: - Game Metadata
-
 public struct GameMetadataInner: Codable {
     public let ageGatings: AnyCodable?
     public let applicationId: String?
@@ -110,7 +117,7 @@ public struct GameMetadataInner: Codable {
     public let title: String?
     public let unsearchable: Bool?
     public let useCount: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case ageGatings
         case applicationId
@@ -143,14 +150,13 @@ public struct GameMetadataInner: Codable {
         case useCount
     }
 }
-
 public struct GameMetadata: Codable {
     public let appName: String
     public let appTitle: String
     public let assetInfos: [String: AssetInfo]
     public let baseUrls: [String]
     public let metadata: GameMetadataInner
-    
+
     enum CodingKeys: String, CodingKey {
         case appName = "app_name"
         case appTitle = "app_title"
@@ -159,9 +165,6 @@ public struct GameMetadata: Codable {
         case metadata
     }
 }
-
-// MARK: - Installed Metadata
-
 public struct InstalledJsonMetadata: Codable {
     public let appName: String
     public let baseUrls: [String]
@@ -181,7 +184,7 @@ public struct InstalledJsonMetadata: Codable {
     public let savePath: String?
     public let title: String
     public let version: String
-    
+
     enum CodingKeys: String, CodingKey {
         case appName = "app_name"
         case baseUrls = "base_urls"
@@ -203,34 +206,26 @@ public struct InstalledJsonMetadata: Codable {
         case version
     }
 }
-
-// MARK: - DLC and Launch
-
 public struct DLCInfo: Codable {
     public let appName: String
     public let title: String
     public let isInstalled: Bool?
-    
+
     enum CodingKeys: String, CodingKey {
         case appName = "app_name"
         case title
         case isInstalled = "is_installed"
     }
 }
-
 public struct LaunchOption: Codable {
     public let name: String
     public let parameters: String
 }
-
 public struct TagInfo: Codable {
     public let tag: String
     public let count: Int
     public let size: Int64
 }
-
-// MARK: - Game Manifest
-
 public struct GameManifest: Codable {
     public let appName: String
     public let buildId: String
@@ -249,7 +244,7 @@ public struct GameManifest: Codable {
     public let tagDownloadSize: [TagInfo]
     public let type: String
     public let version: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case appName = "app_name"
         case buildId = "build_id"
@@ -270,9 +265,6 @@ public struct GameManifest: Codable {
         case version
     }
 }
-
-// MARK: - Game Install Info
-
 public struct GameInstallInfo: Codable {
     public let appName: String
     public let cloudSaveFolder: String?
@@ -285,7 +277,7 @@ public struct GameInstallInfo: Codable {
     public let platformVersions: [String: String]
     public let title: String
     public let version: String
-    
+
     enum CodingKeys: String, CodingKey {
         case appName = "app_name"
         case cloudSaveFolder = "cloud_save_folder"
@@ -300,47 +292,40 @@ public struct GameInstallInfo: Codable {
         case version
     }
 }
-
 public struct LegendaryInstallInfo: Codable {
     public let game: GameInstallInfo
     public let manifest: GameManifest
 }
-
-// MARK: - Configuration
-
 public struct SelectiveDownload: Codable {
     public let tags: [String]
     public let name: String
     public let description: String
     public let required: Bool?
 }
-
 public struct GameOverride: Codable {
     public let executableOverride: [String: [String: String]]
     public let reorderOptimization: [String: [String]]
     public let sdlConfig: [String: Int]
-    
+
     enum CodingKeys: String, CodingKey {
         case executableOverride = "executable_override"
         case reorderOptimization = "reorder_optimization"
         case sdlConfig = "sdl_config"
     }
 }
-
 public struct LegendaryConfig: Codable {
     public let webviewKillswitch: Bool
-    
+
     enum CodingKeys: String, CodingKey {
         case webviewKillswitch = "webview_killswitch"
     }
 }
-
 public struct ResponseDataLegendaryAPI: Codable {
     public let eglConfig: AnyCodable
     public let gameOverrides: GameOverride
     public let legendaryConfig: LegendaryConfig
     public let runtimes: [AnyCodable]
-    
+
     enum CodingKeys: String, CodingKey {
         case eglConfig = "egl_config"
         case gameOverrides = "game_overrides"
@@ -348,9 +333,6 @@ public struct ResponseDataLegendaryAPI: Codable {
         case runtimes
     }
 }
-
-// MARK: - User Info
-
 public struct UserInfo: Codable {
     public let accessToken: String
     public let accountID: String
@@ -359,7 +341,6 @@ public struct UserInfo: Codable {
     public let authTime: String
     public let clientID: String
     public let clientService: String
-    public let deviceID: String
     public let displayName: String
     public let expiresAt: String
     public let expiresIn: Int
@@ -370,7 +351,7 @@ public struct UserInfo: Codable {
     public let refreshToken: String
     public let scope: [String]
     public let tokenType: String
-    
+
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case accountID = "account_id"
@@ -379,7 +360,6 @@ public struct UserInfo: Codable {
         case authTime = "auth_time"
         case clientID = "client_id"
         case clientService = "client_service"
-        case deviceID = "device_id"
         case displayName
         case expiresAt = "expires_at"
         case expiresIn = "expires_in"
@@ -392,45 +372,48 @@ public struct UserInfo: Codable {
         case tokenType = "token_type"
     }
 }
-
-// MARK: - Helper for dynamic JSON
-
-/// A type-erased Codable value for handling dynamic JSON structures
 public struct AnyCodable: Codable {
     public let value: Any
-    
+
     public init(_ value: Any) {
         self.value = value
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        
+
         if container.decodeNil() {
             self.value = NSNull()
-        } else if let bool = try? container.decode(Bool.self) {
+        }
+        else if let bool = try? container.decode(Bool.self) {
             self.value = bool
-        } else if let int = try? container.decode(Int.self) {
+        }
+        else if let int = try? container.decode(Int.self) {
             self.value = int
-        } else if let double = try? container.decode(Double.self) {
+        }
+        else if let double = try? container.decode(Double.self) {
             self.value = double
-        } else if let string = try? container.decode(String.self) {
+        }
+        else if let string = try? container.decode(String.self) {
             self.value = string
-        } else if let array = try? container.decode([AnyCodable].self) {
+        }
+        else if let array = try? container.decode([AnyCodable].self) {
             self.value = array.map { $0.value }
-        } else if let dictionary = try? container.decode([String: AnyCodable].self) {
+        }
+        else if let dictionary = try? container.decode([String: AnyCodable].self) {
             self.value = dictionary.mapValues { $0.value }
-        } else {
+        }
+        else {
             throw DecodingError.dataCorruptedError(
                 in: container,
                 debugDescription: "AnyCodable value cannot be decoded"
             )
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        
+
         switch value {
         case is NSNull:
             try container.encodeNil()

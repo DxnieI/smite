@@ -30,7 +30,8 @@ public class User {
         do {
             let decoder = JSONDecoder()
             let data = try Data(contentsOf: legendaryUserInfo())
-            return try decoder.decode(UserInfo.self, from: data)
+            let lgInfo = try decoder.decode(Legendary.UserInfo.self, from: data)
+            return UserInfo(from: lgInfo)
         }
         catch {
             throw UserError.userInfoCorrupted(legendaryUserInfo().path)
@@ -72,7 +73,8 @@ public class User {
         do {
             let decoder = JSONDecoder()
             let data = try Data(contentsOf: legendaryUserInfo())
-            let userInfo = try decoder.decode(UserInfo.self, from: data)
+            let lgInfo = try decoder.decode(Legendary.UserInfo.self, from: data)
+            let userInfo = UserInfo(from: lgInfo)
             return .success(userInfo)
         }
         catch {

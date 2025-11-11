@@ -27,8 +27,9 @@ add_library(core STATIC
     ${LEGENDARY_COMMANDS_SOURCES}
     ${LEGENDARY_RUNNER_SOURCES}
     src/legendary/Paths.swift
-    src/legendary/Models.swift
+    src/legendary/Schemas.swift
     src/legendary/User.swift
+    src/common/Models.swift
 )
 
 set_target_properties(core PROPERTIES

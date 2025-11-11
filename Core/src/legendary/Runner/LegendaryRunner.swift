@@ -61,17 +61,13 @@ public struct RunnerOptions {
 /// Runner for executing Legendary CLI commands synchronously
 public class LegendaryRunner {
     private let legendaryPath: String
-    private let configPath: String?
-
-    // /// Initialize with custom path or use default
-    // public init(legendaryPath: String? = nil, configPath: String? = nil) {
-    //     self.legendaryPath = legendaryPath ?? Self.findLegendaryBinary()
-    //     self.configPath = configPath
-    // }
 
     public init(legendaryPath: String) {
         self.legendaryPath = legendaryPath
-        self.configPath = nil
+    }
+
+    public init() {
+        self.legendaryPath = legendaryBinaryPath()
     }
     // MARK: - Public API
 
@@ -100,10 +96,8 @@ public class LegendaryRunner {
             }
         }
 
-        // Add LEGENDARY_CONFIG_PATH if provided
-        if let configPath = configPath ?? Self.legendaryConfigPath() {
-            env["LEGENDARY_CONFIG_PATH"] = configPath
-        }
+        env["LEGENDARY_CONFIG_PATH"] = legendaryConfigPath()
+
         process.environment = env
 
         // Set working directory if provided
@@ -120,7 +114,8 @@ public class LegendaryRunner {
         // Launch the process
         do {
             try process.run()
-        } catch {
+        }
+        catch {
             throw LegendaryError.commandFailed(
                 exitCode: -1,
                 stderr: "Failed to launch process: \(error.localizedDescription)"
@@ -186,18 +181,6 @@ public class LegendaryRunner {
         _ command: LegendaryCommand,
     ) -> CommandResult? {
         return try? run(command, baseOptions: BaseCommandOptions(), options: RunnerOptions())
-    }
-
-    // MARK: - Helper Methods
-
-    /// Find the Legendary binary using PATH
-    private static func findLegendaryBinary() -> String {
-        return "legendary"
-    }
-
-    /// Get the config path for Legendary
-    private static func legendaryConfigPath() -> String? {
-        return nil
     }
 }
 

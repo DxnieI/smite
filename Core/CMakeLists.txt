@@ -11,22 +11,25 @@ if (WIN32)
     set_directory_properties(PROPERTIES COMPILE_OPTIONS "${COMPILE_OPTIONS}")
 endif()
 
-# Define source file groups
-set(COMMANDS_SOURCES
-    src/Commands/AuthCommand.swift
-    src/Commands/BaseTypes.swift
-    src/Commands/ImportCommand.swift
-    src/Commands/LegendaryCommand.swift
-    src/Commands/ListCommand.swift
+set(LEGENDARY_COMMANDS_SOURCES
+    src/legendary/Commands/AuthCommand.swift
+    src/legendary/Commands/BaseTypes.swift
+    src/legendary/Commands/ImportCommand.swift
+    src/legendary/Commands/LegendaryCommand.swift
+    src/legendary/Commands/ListCommand.swift
 )
 
-set(RUNNER_SOURCES
-    src/Runner/LegendaryRunner.swift
+set(LEGENDARY_RUNNER_SOURCES
+    src/legendary/Runner/LegendaryRunner.swift
 )
 
 add_library(core STATIC
-    ${COMMANDS_SOURCES}
-    ${RUNNER_SOURCES}
+    ${LEGENDARY_COMMANDS_SOURCES}
+    ${LEGENDARY_RUNNER_SOURCES}
+    src/legendary/Paths.swift
+    src/legendary/Schemas.swift
+    src/legendary/User.swift
+    src/common/Models.swift
 )
 
 set_target_properties(core PROPERTIES
@@ -46,9 +49,21 @@ target_include_directories(core PUBLIC
 
 target_link_libraries(core PUBLIC glaze::glaze)
 
-# Generate C++ headers from Swift sources
 _swift_generate_cxx_header(core
-        core/commands.h
-        SOURCES ${COMMANDS_SOURCES} ${RUNNER_SOURCES}
+        core/legendary/commands.h
+        SOURCES ${LEGENDARY_COMMANDS_SOURCES} 
+        SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
+
+
+_swift_generate_cxx_header(core
+        core/legendary/runner.h
+        SOURCES ${LEGENDARY_RUNNER_SOURCES}
+        SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
+
+_swift_generate_cxx_header(core
+        core/legendary/user.h
+        SOURCES src/legendary/User.swift
         SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )

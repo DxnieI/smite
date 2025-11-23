@@ -1,35 +1,35 @@
-#include <QApplication>
-#include <QQmlApplicationEngine>
-#include <QtQml>
-#include <QQuickStyle>
+#include <KIconTheme>
 #include <KLocalizedContext>
 #include <KLocalizedString>
-#include <KIconTheme>
+#include <QApplication>
+#include <QQmlApplicationEngine>
+#include <QQuickStyle>
+#include <QtQml>
 
-int main(int argc, char *argv[])
-{
-    KIconTheme::initTheme();
-    QApplication app(argc, argv);
+int main(int argc, char *argv[]) {
 
-    KLocalizedString::setApplicationDomain("smite");
-    QApplication::setOrganizationName(QStringLiteral("KDE"));
-    QApplication::setOrganizationDomain(QStringLiteral("kde.org"));
-    QApplication::setApplicationName(QStringLiteral("smite"));
-    QApplication::setDesktopFileName(QStringLiteral("xyz.dxniel.smite"));
+  KIconTheme::initTheme();
+  QApplication app(argc, argv);
 
-    QApplication::setStyle(QStringLiteral("breeze"));
-    if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
-        QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
-    }
+  KLocalizedString::setApplicationDomain("smite");
+  QApplication::setOrganizationName(QStringLiteral("KDE"));
+  QApplication::setOrganizationDomain(QStringLiteral("kde.org"));
+  QApplication::setApplicationName(QStringLiteral("smite"));
+  QApplication::setDesktopFileName(QStringLiteral("xyz.dxniel.smite"));
 
-    QQmlApplicationEngine engine;
+  QApplication::setStyle(QStringLiteral("breeze"));
+  if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
+    QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+  }
 
-    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-    engine.loadFromModule("xyz.dxniel.smite", "Main");
+  QQmlApplicationEngine engine;
 
-    if (engine.rootObjects().isEmpty()) {
-        return -1;
-    }
+  engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
+  engine.loadFromModule("xyz.dxniel.smite", "Main");
 
-    return app.exec();
+  if (engine.rootObjects().isEmpty()) {
+    return -1;
+  }
+
+  return app.exec();
 }

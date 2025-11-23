@@ -1,41 +1,7 @@
 ﻿{
-  "version": 3,
-  "cmakeMinimumRequired": {
-    "major": 3,
-    "minor": 29,
-    "patch": 0
-  },
-  "configurePresets": [
-    {
-      "name": "base",
-      "hidden": true,
-      "generator": "Ninja",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_SKIP_INSTALL_ALL_DEPENDENCY": true,
-        "CMAKE_CXX_STANDARD": "20"
-      }
-    },
-    {
-      "name": "release",
-      "displayName": "Release",
-      "binaryDir": "${sourceDir}/build/release",
-      "installDir": "${sourceDir}/out/release",
-      "inherits": ["base"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "clang-cl",
-        "CMAKE_CXX_COMPILER": "clang-cl"
-      }
-    }
-  ],
-  "buildPresets": [
-    {
-      "name": "release",
-      "configurePreset": "release"
-    }
+  "version": 9,
+  "include": [
+    "Release.json",
+    "Debug.json"
   ]
 }

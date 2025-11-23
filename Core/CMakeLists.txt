@@ -47,8 +47,6 @@ target_include_directories(core PUBLIC
         $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(core PUBLIC glaze::glaze)
-
 _swift_generate_cxx_header(core
         core/legendary/commands.h
         SOURCES ${LEGENDARY_COMMANDS_SOURCES} 

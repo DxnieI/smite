@@ -12,7 +12,8 @@
       "binaryDir": "${sourceDir}/build/release",
       "installDir": "${sourceDir}/out/release",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang-cl"
       },
       "condition": {
         "type": "equals",

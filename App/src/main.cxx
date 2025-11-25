@@ -5,10 +5,13 @@
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QtQml>
+#include "viewmodels/UserViewModel.h"
+#include <QtWebEngineQuick>
 
 int main(int argc, char *argv[]) {
 
   KIconTheme::initTheme();
+  QtWebEngineQuick::initialize();
   QApplication app(argc, argv);
 
   KLocalizedString::setApplicationDomain("smite");
@@ -23,6 +26,10 @@ int main(int argc, char *argv[]) {
   }
 
   QQmlApplicationEngine engine;
+
+  qmlRegisterType<UserViewModel>("xyz.dxniel.smite", 1, 0, "UserViewModel");
+  UserViewModel globalUserViewModel;
+  engine.rootContext()->setContextProperty(QStringLiteral("globalUserViewModel"), &globalUserViewModel);
 
   engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
   engine.loadFromModule("xyz.dxniel.smite", "Main");

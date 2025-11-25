@@ -22,6 +22,7 @@ find_package(Qt6 REQUIRED COMPONENTS
         Gui
         QuickControls2
         Widgets
+        WebEngineQuick
 )
 
 # Find KDE Frameworks 6

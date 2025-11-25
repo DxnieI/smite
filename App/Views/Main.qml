@@ -8,13 +8,15 @@ Kirigami.ApplicationWindow {
     // Unique identifier to reference this object
     id: root
 
-    width: 400
-    height: 300
+    width: 1200
+    height: 800
 
     // Window title
     // i18nc() makes a string translatable
     // and provides additional context for the translators
     title: i18nc("@title:window", "Smite")
+
+    
 
     globalDrawer: Kirigami.GlobalDrawer {
         actions: [
@@ -27,17 +29,20 @@ Kirigami.ApplicationWindow {
                 text: i18n("Settings")
                 icon.name: "settings-configure"
                 onTriggered: showPassiveNotification("Settings clicked")
+            },
+            Kirigami.Action {
+                text: i18n("Account")
+                icon.name: "user-identity"
+                onTriggered: showPassiveNotification("Account clicked")
             }
         ]
     }
 
+    pageStack.defaultColumnWidth: Infinity
+
     // Set the first page that will be loaded when the app opens
     // This can also be set to an id of a Kirigami.Page
-    pageStack.initialPage: Kirigami.Page {
-        Controls.Label {
-            // Center label horizontally and vertically within parent object
-            anchors.centerIn: parent
-            text: i18n("Humble beginnings")
-        }
+    pageStack.initialPage: UserView {
+        userViewModel: globalUserViewModel
     }
 }

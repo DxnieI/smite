@@ -12,7 +12,10 @@
       "binaryDir": "${sourceDir}/build/release",
       "installDir": "${sourceDir}/out/release",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang-cl",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "QT_QML_GENERATE_QMLLS_INI": "ON"
       },
       "condition": {
         "type": "equals",

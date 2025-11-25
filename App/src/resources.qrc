@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../Views/Main.qml</file>
+        <file>../Views/UserView.qml</file>
+        <file alias="icons/epic.svg">../Assets/icons/epic.svg</file>
+    </qresource>
+</RCC>

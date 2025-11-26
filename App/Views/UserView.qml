@@ -22,117 +22,102 @@ Kirigami.Page {
         //     Layout.alignment: Qt.AlignHCenter
         // }
 
+        // EPIC LOGIN
         Rectangle {
             Layout.fillWidth: true
-            color: "#0f1112"
-            radius: 16
-            border.color: "#222428"
-            border.width: 1
-            Layout.preferredHeight: (Kirigami.Units.gridUnit * 8) + (Kirigami.Units.largeSpacing * 2)
-            anchors.horizontalCenter: parent.horizontalCenter
             visible: !userViewModel.isLoggedIn
+            color: "#2a2a2a"
+            Layout.preferredHeight: 60
+            radius: 12
 
-            ColumnLayout {
+            RowLayout {
                 anchors.fill: parent
-                anchors.margins: 12
-                spacing: Kirigami.Units.largeSpacing
+                spacing: 12
 
-                // EPIC GAMES LOGIN (original content kept)
-                Rectangle {
+                Controls.Label {
+                    text: qsTr("EPIC GAMES LOGIN")
+                    color: "#ffffff"
                     Layout.fillWidth: true
-                    color: "#2a2a2a"
-                    Layout.preferredHeight: 60
-                    radius: 12
-
-                    RowLayout {
-                        anchors.fill: parent
-                        spacing: 12
-
-                        Controls.Label {
-                            text: qsTr("EPIC GAMES LOGIN")
-                            color: "#ffffff"
-                            Layout.fillWidth: true
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                            font.pointSize: 10
-                        }
-
-                        Rectangle {
-                            width: 67
-                            color: "#ffffff"
-                            radius: 12
-                            bottomLeftRadius: 0
-                            topLeftRadius: 0
-                            Layout.preferredHeight: 57
-                            Image {
-                                source: "qrc:/icons/epic.svg"
-                                anchors.centerIn: parent
-                                width: 50
-                                height: 50
-                                fillMode: Image.PreserveAspectFit
-                            }
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: false
-                        onClicked: pageStack.push(epicLoginPage)
-                    }
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    font.pointSize: 10
                 }
 
-                // EPIC ALTERNATIVE LOGIN (original content kept)
                 Rectangle {
-                    Layout.fillWidth: true
-                    color: "#2a2a2a"
-                    Layout.preferredHeight: 60
+                    width: 67
+                    color: "#ffffff"
                     radius: 12
-
-                    RowLayout {
-                        anchors.fill: parent
-                        spacing: 12
-
-                        Controls.Label {
-                            text: qsTr("EPIC ALTERNATIVE LOGIN")
-                            color: "#ffffff"
-                            Layout.fillWidth: true
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                            font.pointSize: 10
-                        }
-
-                        Rectangle {
-                            width: 67
-                            color: "#ffffff"
-                            radius: 12
-                            bottomLeftRadius: 0
-                            topLeftRadius: 0
-                            Layout.preferredHeight: 57
-                            Image {
-                                source: "qrc:/icons/epic.svg"
-                                anchors.centerIn: parent
-                                width: 50
-                                height: 50
-                                fillMode: Image.PreserveAspectFit
-                            }
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: false
-                        onClicked: {
-                            loginDialog.open();
-                            userViewModel.clearErrorMessage();
-                        }
+                    bottomLeftRadius: 0
+                    topLeftRadius: 0
+                    Layout.preferredHeight: 57
+                    Image {
+                        source: "qrc:/icons/epic.svg"
+                        anchors.centerIn: parent
+                        width: 50
+                        height: 50
+                        fillMode: Image.PreserveAspectFit
                     }
                 }
+            }
 
-                // ADD GOG (AND NILE?) HERE
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: false
+                onClicked: pageStack.push(epicLoginPage)
             }
         }
+
+        // ALT EPIC LOGIN
+        Rectangle {
+            Layout.fillWidth: true
+            visible: !userViewModel.isLoggedIn
+            color: "#2a2a2a"
+            Layout.preferredHeight: 60
+            radius: 12
+
+            RowLayout {
+                anchors.fill: parent
+                spacing: 12
+
+                Controls.Label {
+                    text: qsTr("EPIC ALTERNATIVE LOGIN")
+                    color: "#ffffff"
+                    Layout.fillWidth: true
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    font.pointSize: 10
+                }
+
+                Rectangle {
+                    width: 67
+                    color: "#ffffff"
+                    radius: 15
+                    bottomLeftRadius: 0
+                    topLeftRadius: 0
+                    Layout.preferredHeight: 57
+                    Image {
+                        source: "qrc:/icons/epic.svg"
+                        anchors.centerIn: parent
+                        width: 50
+                        height: 50
+                        fillMode: Image.PreserveAspectFit
+                    }
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: false
+                onClicked: {
+                    loginDialog.open();
+                    userViewModel.clearErrorMessage();
+                }
+            }
+        }
+
+
 
 
         // LOGGED IN PAGE

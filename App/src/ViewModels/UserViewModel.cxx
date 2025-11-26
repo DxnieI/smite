@@ -64,7 +64,7 @@ void UserViewModel::login(const QString &authCode) {
     const std::string code = authCode.toStdString();
 
     // Run Legendary login on a background thread
-    QtConcurrent::run([this, code]() {
+    QThreadPool::globalInstance()->start([this, code]() {
         Core::LoginResult result = Core::User::tryLogin(code);
 
         bool ok = false;
@@ -72,16 +72,16 @@ void UserViewModel::login(const QString &authCode) {
 
         // This switch stays inside the worker thread.
         switch (result) {
-        case Core::LoginResult::success: {
-            ok = true;
-            break;
-        }
-        case Core::LoginResult::failure: {
-            auto error = result.getFailure();
-            errorMsg = QString::fromStdString((std::string)error.getDescription());
-            ok = false;
-            break;
-        }
+          case Core::LoginResult::success: {
+              ok = true;
+              break;
+          }
+          case Core::LoginResult::failure: {
+              auto error = result.getFailure();
+              errorMsg = QString::fromStdString((std::string)error.getDescription());
+              ok = false;
+              break;
+          }
         }
 
         // Now jump back to the GUI thread with only simple types.
@@ -114,7 +114,7 @@ void UserViewModel::logout() {
     setIsLoading(true);
     setErrorMessage(QString());
 
-    QtConcurrent::run([this]() {
+    QThreadPool::globalInstance()->start([this]() {
         Core::LogoutResult result = Core::User::tryLogout();
 
         bool ok = false;

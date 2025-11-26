@@ -30,6 +30,7 @@ ecm_target_qml_sources(app
         SOURCES
         Views/Main.qml
         Views/UserView.qml
+        Views/LibraryView.qml
 )
 
 target_include_directories(app PUBLIC

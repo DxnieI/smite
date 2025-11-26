@@ -15,9 +15,7 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_EXPORT_COMPILE_COMMANDS": true,
         "QT_QML_GENERATE_QMLLS_INI": "ON",
-        "CMAKE_CXX_COMPILER": "clang-cl",
-        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDebugDLL",
-        "CMAKE_CXX_FLAGS_DEBUG": "/D_ITERATOR_DEBUG_LEVEL=0"
+        "CMAKE_CXX_COMPILER": "clang-cl"
       },
       "condition": {
         "type": "equals",

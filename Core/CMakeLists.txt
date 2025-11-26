@@ -53,3 +53,9 @@ _swift_generate_cxx_header(core
         SOURCES src/legendary/User.swift
         SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
+
+_swift_generate_cxx_header(core
+        core/legendary/library.h
+        SOURCES src/legendary/Library.swift
+        SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)

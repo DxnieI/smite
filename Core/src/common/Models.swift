@@ -18,6 +18,8 @@ public struct GameInfo {
     public let artSquare: String?
     public let artLogo: String?
     public let description: String?
+    public let isInstalled: Bool
+    public let installPath: String?
 
     public init(
         appName: String,
@@ -26,7 +28,9 @@ public struct GameInfo {
         artCover: String? = nil,
         artSquare: String? = nil,
         artLogo: String? = nil,
-        description: String? = nil
+        description: String? = nil,
+        isInstalled: Bool = false,
+        installPath: String? = nil
     ) {
         self.appName = appName
         self.title = title
@@ -35,5 +39,7 @@ public struct GameInfo {
         self.artSquare = artSquare
         self.artLogo = artLogo
         self.description = description
+        self.isInstalled = isInstalled
+        self.installPath = installPath
     }
 }

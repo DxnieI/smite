@@ -22,7 +22,7 @@ Kirigami.ApplicationWindow {
     }
     Component {
         id: libraryViewComponent
-        LibraryView { }
+        LibraryView { libraryViewModel: globalLibraryViewModel }
     }
 
     globalDrawer: Kirigami.GlobalDrawer {

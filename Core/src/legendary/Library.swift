@@ -17,7 +17,26 @@ public class Library {
         }
     }
 
-
+    /// Init that skips refresh if files exist in metadata dir
+    public init() {
+        let metadataDir = legendaryMetadata()
+        let hasFiles: Bool = {
+            if let files = try? FileManager.default.contentsOfDirectory(atPath: metadataDir) {
+                return files.contains(where: { $0.hasSuffix(".json") })
+            }
+            return false
+        }()
+        if hasFiles {
+            loadGamesInAccount()
+            refreshInstalled()
+            _ = loadAll()
+        } else {
+            _ = refreshLegendary()
+            loadGamesInAccount()
+            refreshInstalled()
+            _ = loadAll()
+        }
+    }
 
     // MARK: - Refresh Legendary Library (runs CLI, updates metadata)
     public func refreshLegendary() -> CommandResult? {
@@ -45,12 +64,15 @@ public class Library {
     public func refreshInstalled() {
         installedGames.removeAll()
         let installedPath = legendaryInstalled()
-        guard let data = try? Data(contentsOf: installedPath) else { return }
-        guard
-            let arr = try? JSONDecoder().decode([Legendary.InstalledJsonMetadata].self, from: data)
-        else { return }
-        for entry in arr {
-            installedGames[entry.appName] = entry
+        guard let data = try? Data(contentsOf: installedPath) else {
+            return
+        }
+        
+        do {
+            let dict = try JSONDecoder().decode([String: Legendary.InstalledJsonMetadata].self, from: data)
+            installedGames = dict
+        } catch {
+            // ignore decode errors
         }
     }
 
@@ -78,7 +100,7 @@ public class Library {
 
     // MARK: - List all games (returns GameInfo)
     public func getListOfGames() -> [GameInfo] {
-        return library.values.map { meta in
+        let games = library.values.map { meta in
             let appName = meta.appName
             let title = meta.appTitle
             let developer = meta.metadata.developer
@@ -89,6 +111,8 @@ public class Library {
                 keyImages.first(where: { $0.type == "DieselStoreFrontTall" })?.url
             let artLogo = keyImages.first(where: { $0.type == "DieselGameBoxLogo" })?.url
             let description = meta.metadata.description
+            let isInstalled = installedGames[appName] != nil
+            let installPath = installedGames[appName]?.installPath
             return GameInfo(
                 appName: appName,
                 title: title,
@@ -96,9 +120,20 @@ public class Library {
                 artCover: artCover,
                 artSquare: artSquare,
                 artLogo: artLogo,
-                description: description
+                description: description,
+                isInstalled: isInstalled,
+                installPath: installPath
             )
+        }.sorted { game1, game2 in
+            // Installed games first
+            if game1.isInstalled != game2.isInstalled {
+                return game1.isInstalled
+            }
+            // Then alphabetically by title
+            return game1.title.localizedCaseInsensitiveCompare(game2.title) == .orderedAscending
         }
+        
+        return games
     }
 
     // MARK: - Get game info (loads if not present)
@@ -122,7 +157,9 @@ public class Library {
             artCover: artCover,
             artSquare: artSquare,
             artLogo: artLogo,
-            description: description
+            description: description,
+            isInstalled: installedGames[meta.appName] != nil,
+            installPath: installedGames[meta.appName]?.installPath
         )
     }
 }

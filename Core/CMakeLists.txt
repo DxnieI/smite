@@ -17,6 +17,10 @@ set(LEGENDARY_COMMANDS_SOURCES
     src/legendary/Commands/ImportCommand.swift
     src/legendary/Commands/LegendaryCommand.swift
     src/legendary/Commands/ListCommand.swift
+    src/legendary/Paths.swift
+    src/legendary/Models+Legendary.swift
+    src/legendary/User.swift
+    src/legendary/Library.swift
 )
 
 set(LEGENDARY_RUNNER_SOURCES
@@ -26,9 +30,6 @@ set(LEGENDARY_RUNNER_SOURCES
 add_library(core STATIC
     ${LEGENDARY_COMMANDS_SOURCES}
     ${LEGENDARY_RUNNER_SOURCES}
-    src/legendary/Paths.swift
-    src/legendary/Schemas.swift
-    src/legendary/User.swift
     src/common/Models.swift
 )
 
@@ -45,19 +46,6 @@ target_compile_options(core PUBLIC
 target_include_directories(core PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
-)
-
-_swift_generate_cxx_header(core
-        core/legendary/commands.h
-        SOURCES ${LEGENDARY_COMMANDS_SOURCES} 
-        SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
-)
-
-
-_swift_generate_cxx_header(core
-        core/legendary/runner.h
-        SOURCES ${LEGENDARY_RUNNER_SOURCES}
-        SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
 _swift_generate_cxx_header(core

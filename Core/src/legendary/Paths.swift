@@ -18,10 +18,9 @@ public func legendaryUserInfo() -> URL {
         .appendingPathComponent("user.json")
 }
 
-func legendaryInstalled() -> String {
+func legendaryInstalled() -> URL {
     return URL(fileURLWithPath: legendaryConfigPath())
         .appendingPathComponent("installed.json")
-        .path
 }
 
 func legendaryMetadata() -> String {

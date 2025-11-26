@@ -62,12 +62,12 @@ public class User {
     }
 
     static public func isLoggedIn() -> Bool {
-        FileManager.default.fileExists(atPath: legendaryUserInfo().path())
+        FileManager.default.fileExists(atPath: legendaryUserInfo().path)
     }
 
     static public func getUserInfo() -> UserInfoResult {
         guard isLoggedIn() else {
-            return .failure(.userInfoCorrupted("User not logged in"))
+            return .failure(.userInfoCorrupted(legendaryUserInfo().path))
         }
 
         do {

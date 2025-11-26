@@ -51,6 +51,7 @@ App/.qmlls.ini
 *.code-workspace
 .clangd/
 compile_commands.json
+.qmlls.ini
 
 # JetBrains CLion
 .idea/

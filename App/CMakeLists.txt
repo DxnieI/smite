@@ -14,15 +14,31 @@ ecm_add_qml_module(app
         URI xyz.dxniel.smite
 )
 
+qt_add_resources(RESOURCE_FILES
+    src/resources.qrc
+)
+
 target_sources(app
         PRIVATE
-        main.cxx
+        src/main.cxx
+        src/ViewModels/UserViewModel.cxx
+        include/viewmodels/UserViewModel.h
+        ${RESOURCE_FILES}
 )
 
 ecm_target_qml_sources(app
         SOURCES
-        Main.qml
+        Views/Main.qml
+        Views/UserView.qml
+        Views/LibraryView.qml
 )
+
+target_include_directories(app PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/Core/include
+)
+
+find_package(Qt6 REQUIRED COMPONENTS Quick Qml WebEngineQuick Svg Concurrent)
 
 target_link_libraries(app
         PUBLIC
@@ -36,6 +52,9 @@ target_link_libraries(app
         KF6::I18n
         KF6::CoreAddons
         KF6::IconThemes
+        Qt6::WebEngineQuick
+        Qt6::Svg
+        Qt6::Concurrent
 )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")

@@ -164,7 +164,6 @@ void UserViewModel::updateUserInfo() {
         setDisplayName(name);
         setAccountId(id);
         setErrorMessage(QString());
-        qDebug() << "Loaded user info:" << name << id;
         break;
     }
     case Core::UserInfoResult::failure: {

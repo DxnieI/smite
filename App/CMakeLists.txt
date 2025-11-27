@@ -23,6 +23,8 @@ target_sources(app
         src/main.cxx
         src/ViewModels/UserViewModel.cxx
         include/viewmodels/UserViewModel.h
+        src/ViewModels/LibraryViewModel.cxx
+        include/viewmodels/LibraryViewModel.h
         ${RESOURCE_FILES}
 )
 
